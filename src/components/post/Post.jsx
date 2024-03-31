@@ -32,6 +32,15 @@ const Post = ({ post, postId }) => {
             })
     });
 
+    const { isLoading: commentIsLoading, error: commentError, data: commentData } = useQuery({
+        queryKey: ["comments", postId], queryFn: () =>
+
+            makeRequest.get("/comments?postId=" + postId).then((res) => {
+                return res.data.data;
+            }).catch((err) => {
+                throw err;
+            })
+    });
 
     useEffect(() => {
         if (data && data.post) {
@@ -111,7 +120,11 @@ const Post = ({ post, postId }) => {
                     </div>
                     <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
                         <TextsmsOutlinedIcon />
-                        12 Comments
+                        {commentIsLoading ? "Loading" : (
+                            <>
+                                {commentData ? commentData.length : 0} Comments
+                            </>
+                        )}
                     </div>
                     <div className="item">
                         <ShareOutlinedIcon />
