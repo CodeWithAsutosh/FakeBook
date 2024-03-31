@@ -17,7 +17,7 @@ export const AuthContextProvider = ({ children }) => {
       const res = await axios.post(`${baseURL}/users/login`, inputs);
       setCurrentUserID(res.data.data.userId);
       setCurrentUser(res.data.data.token);
-      return res.data;
+      return res.data.status === true ? res.data : false;
     } catch (err) {
       if (err.response && err.response.data.status === false) {
         alert(err.response.data.message);
@@ -26,8 +26,10 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    localStorage.setItem("userId", currentUserID);
-    localStorage.setItem("token", currentUser);
+    if(currentUser && currentUserID){
+      localStorage.setItem("userId", currentUserID);
+      localStorage.setItem("token", currentUser);
+    }
   }, [currentUser, currentUserID]);
 
   return (

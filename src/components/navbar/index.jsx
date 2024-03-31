@@ -28,6 +28,8 @@ const Navbar = () => {
 
     try {
       await axios.post("http://localhost:3002/users/logout");
+      localStorage.clear();
+      window.location.reload();
       navigate("/login");
     } catch (err) {
       console.log(err.response.data.message);
