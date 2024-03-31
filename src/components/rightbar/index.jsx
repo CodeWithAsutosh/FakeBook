@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './rightbar.scss';
 const baseURL = process.env.REACT_APP_BASE_URL;
-const userId = JSON.parse(localStorage.getItem('userId'));
-const accessToken = JSON.parse(localStorage.getItem('token'));
+const userId = localStorage.getItem('userId');
+const accessToken = localStorage.getItem('token');
 
 const Rightbar = () => {
   const [users, setUsers] = useState([]);

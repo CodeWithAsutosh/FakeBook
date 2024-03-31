@@ -19,9 +19,9 @@ const Posts = ({ userId }) => {
       {error ? "Something went wrong!"
         : isLoading
           ? "loading"
-          : data.map((post) => (
-            <div className="post">
-              <Post post={post} key={post.id} />
+          : data.map((post, index) => (
+            <div className="post" key={index}>
+              <Post post={post} postId={post["_id"]} key={post["_id"]} />
             </div>
           ))}
     </div>

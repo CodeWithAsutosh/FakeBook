@@ -3,6 +3,8 @@ import './comments.scss';
 import { AuthContext } from '../../context/authContext';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { makeRequest } from '../../axios.js';
+import moment from 'moment';
+
 
 const Comments = ({ postId }) => {
 
@@ -14,7 +16,7 @@ const Comments = ({ postId }) => {
     queryKey: ["comments"], queryFn: () =>
 
       makeRequest.get("/comments?postId=" + postId).then((res) => {
-        return res.data;
+        return res.data.data;
       })
   });
 
@@ -32,7 +34,7 @@ const Comments = ({ postId }) => {
 
   const handleClick = async e => {
     e.preventDefault();
-    mutation.mutate({ desc, postId });
+    mutation.mutate({ description: desc, postId: postId });
     setDesc("");
   };
 
@@ -48,12 +50,12 @@ const Comments = ({ postId }) => {
       </div>
       {isLoading ? "loading" : data.map(comment => (
         <div className="comment">
-          <img src={comment.profilePic} alt="" />
+          <img src={comment.author.profilePic} alt="" />
           <div className="info">
-            <span>{comment.name}</span>
-            <p>{comment.desc}</p>
+            <span>{comment.author.firstName}</span>
+            <p>{comment.description}</p>
           </div>
-          <span className='date'>""</span>
+          <span className='date'>{moment(comment.createdAt).format("DD.MM.YYYY hh:mm A")}</span>
         </div>
       ))}
     </div>

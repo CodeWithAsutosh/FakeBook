@@ -17,7 +17,6 @@ const Update = ({ setOpenUpdate, user }) => {
     });
 
     const upload = async (file) => {
-        console.log(file)
         try {
             const formData = new FormData();
             formData.append("file", file);

@@ -13,8 +13,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { DarkModeContext } from '../../context/darkModeContext';
 import { AuthContext } from '../../context/authContext';
-const userId = JSON.parse(localStorage.getItem('userId'));
-// const accessToken = JSON.parse(localStorage.getItem('token'));
+const userId = localStorage.getItem("userId") ? localStorage.getItem('userId') : null;
+// const accessToken = localStorage.getItem('token') ? localStorage.getItem('token') : null;
 
 const Navbar = () => {
 
@@ -22,41 +22,41 @@ const Navbar = () => {
 
   const { toggle, darkMode } = useContext(DarkModeContext);
   const { currentUser } = useContext(AuthContext);
-  
-  const handleLogout = async(e) => {
+
+  const handleLogout = async (e) => {
     e.preventDefault()
 
     try {
-        await axios.post("http://localhost:3002/users/logout");
-        navigate("/login");
+      await axios.post("http://localhost:3002/users/logout");
+      navigate("/login");
     } catch (err) {
-        console.log(err.response.data.message);
+      console.log(err.response.data.message);
     }
   }
 
   return (
     <div className='navbar'>
       <div className='left'>
-        <Link to='/' style={{textDecoration:"none"}}>
-        <span>FakeBook</span>
+        <Link to='/' style={{ textDecoration: "none" }}>
+          <span>FakeBook</span>
         </Link>
-        <HomeOutlinedIcon/>
-        {darkMode ? <WbSunnyOutlinedIcon onClick={toggle}/> : <DarkModeOutlinedIcon onClick={toggle}/>}
-        <AppsOutlinedIcon/>
+        <HomeOutlinedIcon />
+        {darkMode ? <WbSunnyOutlinedIcon onClick={toggle} /> : <DarkModeOutlinedIcon onClick={toggle} />}
+        <AppsOutlinedIcon />
         <div className="search">
-          <SearchOutlinedIcon/>
-          <input type='text' placeholder='Search'/>
+          <SearchOutlinedIcon />
+          <input type='text' placeholder='Search' />
         </div>
       </div>
       <div className='right'>
         <div><button onClick={handleLogout}>Logout</button></div>
         <Link to={`/profile/${userId}`}>
-        <PersonOutlinedIcon />
+          <PersonOutlinedIcon />
         </Link>
-        <EmailOutlinedIcon/>
-        <NotificationsOutlinedIcon/>
+        <EmailOutlinedIcon />
+        <NotificationsOutlinedIcon />
         <div className="user">
-          <img src={currentUser.profilePic} alt=''/>
+          <img src={currentUser.profilePic} alt='' />
           <span>{currentUser.name}</span>
         </div>
       </div>

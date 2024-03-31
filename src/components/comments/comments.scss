@@ -39,10 +39,12 @@
       display: flex;
       justify-content: space-between;
       gap: 20px;
-
+      
       .info {
         flex:5;
         display: flex;
+        align-items: start;
+        justify-content: start;
         flex-direction: column;
         gap: 3px;
         align-items: flex-start;
@@ -57,8 +59,8 @@
       }
 
       .date{
-        flex:1;
-        align-self: center;
+        // flex:1;
+        align-self: start;
         color: gray;
         font-size: 12px;
       }
