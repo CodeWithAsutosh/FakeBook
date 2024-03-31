@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import VanillaTilt from 'vanilla-tilt';
 import axios from "axios";
 
 const SignUp = () => {
+
+    const navigate = useNavigate();
 
     const [inputs, setInputs] = useState({
         firstName: "",
@@ -16,16 +18,17 @@ const SignUp = () => {
     const [err, setErr] = useState(null)
 
     const handleChange = e =>{
-        setInputs(prev=>({...prev, [e.target.name]: e.target.values}))
+        setInputs(prev=>({...prev, [e.target.name]: e.target.value}))
     }
 
     const handleClick = async e => {
         e.preventDefault()
 
         try {
-            await axios.post("http://localhost:3002/signup",inputs)
+            await axios.post("http://localhost:3002/users/signup",inputs);
+            navigate("/login");
         } catch (err) {
-            setErr(err.response.data);
+            setErr(err.response.data.message);
         }
     }
 

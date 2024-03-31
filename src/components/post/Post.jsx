@@ -20,11 +20,11 @@ const Post = ({ post }) => {
     const { currentUser } = useContext(AuthContext);
 
     const { isLoading, error, data } = useQuery(
-        {
+        {   
             queryKey: ["likes", post.id], queryFn: () =>
-
-                makeRequest.get("/likes?/postId=" + post.id).then((res) => {
-                    return res.data;
+            makeRequest.get("/likes/getlike?postId=" + post.id).then((res) => {
+                    //console.log("like", res.data);
+                    return res.data.data;
                 })
         });
 
@@ -32,7 +32,7 @@ const Post = ({ post }) => {
 
     const mutation = useMutation({
         mutationFn: (liked) => {
-            if (liked) return makeRequest.delete("/likes?postId=" + post.id);
+            if (liked) return makeRequest.delete("/likes/addlike?postId=" + post.id);
             makeRequest.post("/likes", { postId: post.id });
         },
         onSuccess: () => {
